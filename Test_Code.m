@@ -13,7 +13,7 @@ load('Test_Data.mat')
 
 figure(1)
 for ii = 1:10
-    subplot(1, 2, 1)
+    subplot(1, 2, 1) %subplot(m,n,p)는 현재 Figure를 mxn 그리드로 나누고, p로 지정된 위치에 좌표축을 만듭니다.
     imagesc(squeeze(left_turn_Data(ii, :, :).^1.5)); % 좌회전 차량
     xlabel('Distance (m)')
     ylabel('Angle (deg.)')
