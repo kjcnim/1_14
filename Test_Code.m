@@ -13,7 +13,7 @@ load('Test_Data.mat')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 figure(1)
-for ii = 1:1
+for ii = 1:2
     subplot(1, 2, 1) %subplot(m,n,p)는 현재 Figure를 mxn 그리드로 나누고, p로 지정된 위치에 좌표축을 만듭니다.
     
     % imagesc : 스케일링된 색으로 이미지 표시
@@ -23,14 +23,21 @@ for ii = 1:1
     % 10장의 이미지는 곧 높이가 10인 CUBE라고 생각하면 된다.
     % 따라서 첫번째 이미지는 높이가 1인 영역을 그렸을 때 이미지
     % 따라서 각 이미지에서 라벨링할 점에 대응되는 데이터값의 특징들을 보고 이에 맞는 함수를 적용시켜서 자동 라벨링 할 수 있도록 하면 된다. 
-    imagesc(squeeze(left_turn_Data(ii, :, :).^1.5)); % 좌회전 차량
+    imagesc(squeeze(left_turn_Data(ii, :, :).^1.5));
+    
     xlabel('Distance (m)')
     ylabel('Angle (deg.)')
+    
+    [a,b] = ginput(4)
+    
     
     subplot(1, 2, 2)
     imagesc(squeeze(right_turn_Data(ii, :, :).^1.5)); % 우회전
+    B = imagesc(squeeze(right_turn_Data(ii, :, :).^1.5)); % 우회전
     xlabel('Distance (m)')
     ylabel('Angle (deg.)')
     
+    [x,y] = ginput(4)
+    plot(x,y);
     pause(0.5);
 end
