@@ -28,8 +28,32 @@ for ii = 1:2
     xlabel('Distance (m)')
     ylabel('Angle (deg.)')
     
-    [a,b] = ginput(4)
+    [value,max_p] = max(left_turn_Data(ii,:));
+    max_p_Distance = fix(max_p/127);
+    max_p_Angle = max_p - (max_p_Distance * 127);
     
+    box1_x = (max_p_Distance -2);
+    box1_y = (max_p_Angle + 20);
+    box_point_3 = 127 * (box1_x - 1) + box1_y;
+    
+    box2_x = (max_p_Distance - 2);  
+    box2_y = (max_p_Angle - 13);
+    box_point_1 = 127 * (box2_x - 1) + box2_y;
+    
+    box3_x = (max_p_Distance + 21);
+    box3_y = (max_p_Angle - 13);
+    box_point_2 = 127 * (box3_x - 1) + box3_y;
+   
+    box4_x = (max_p_Distance + 21);
+    box4_y = (max_p_Angle + 20);
+    box_point_4 = 127 * (box4_x - 1) + box4_y;
+    
+    X = [box1_x; box2_x; box3_x; box4_x];
+    Y = [box1_y; box2_y; box3_y; box4_y];
+  
+    pgon = polyshape(X,Y)
+    
+    plot(pgon)
     
     subplot(1, 2, 2)
     imagesc(squeeze(right_turn_Data(ii, :, :).^1.5)); % 우회전
@@ -37,7 +61,29 @@ for ii = 1:2
     xlabel('Distance (m)')
     ylabel('Angle (deg.)')
     
-    [x,y] = ginput(4)
-    plot(x,y);
-    pause(0.5);
+    box1_a = (max_p_Distance -2);
+    box1_b = (max_p_Angle + 20);
+    box_point_3 = 127 * (box1_a - 1) + box1_b;
+    
+    box2_a = (max_p_Distance - 2);  
+    box2_b = (max_p_Angle - 13);
+    box_point_1 = 127 * (box2_a - 1) + box2_b;
+    
+    box3_a = (max_p_Distance + 21);
+    box3_b = (max_p_Angle - 13);
+    box_point_2 = 127 * (box3_a - 1) + box3_b;
+   
+    box4_a = (max_p_Distance + 21);
+    box4_b = (max_p_Angle + 20);
+    box_point_4 = 127 * (box4_a - 1) + box4_b;
+    
+    A = [box1_a; box2_a; box3_a; box4_a];
+    B = [box1_b; box2_b; box3_b; box4_b];
+  
+    pgon = polyshape(A,B)
+    
+    plot(pgon)
+    
+    pause(5);
+    
 end
