@@ -14,22 +14,15 @@ load('Test_Data.mat')
 %%% 적절한 픽셀 크기로 라벨링 -> YOLO 네트워크 설계 후 돌려보기
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
     %행렬 초기화
-    X_Z = double.empty(4,0)
-    Y_Z = double.empty(4,0)
+    L = int16.empty(0,4)
+    L_A = int16.empty(0,4)
     
-    A_Z = double.empty(4,0)
-    B_Z = double.empty(4,0)
-    
-    X_R = double.empty(4,0)
-    Y_R = double.empty(4,0)
-    
-    A_R = double.empty(4,0)
-    B_R = double.empty(4,0)
+    R = int16.empty(0,4)
+    R_A = int16.empty(0,4)
     
 figure(1)    
-for ii = 1:5
+for ii = 1:10
     subplot(1, 2, 1) %subplot(m,n,p)는 현재 Figure를 mxn 그리드로 나누고, p로 지정된 위치에 좌표축을 만듭니다.
     
     % imagesc : 스케일링된 색으로 이미지 표시
@@ -46,18 +39,12 @@ for ii = 1:5
     % 점을 찍는 순서는 왼쪽 위, 오른쪽 아래
     [X,Y] = ginput(2);
     
-    X_Z(1,1) = X(1,1)
-    X_Z(3,1) = X(1,1)
-    X_Z(2,1) = X(2,1)
-    X_Z(4,1) = X(2,1)
+    L(1,1) = X(1,1) % X좌표
+    L(1,2) = Y(1,1) % Y좌표
+    L(1,3) = X(2,1) - X(1,1) % 너비
+    L(1,4) = Y(2,1) - Y(1,1) % 높이 
     
-    Y_Z(1,1) = Y(1,1)
-    Y_Z(2,1) = Y(1,1)
-    Y_Z(3,1) = Y(2,1)
-    Y_Z(4,1) = Y(2,1)
-    
-    X_R = cat(2,X_R, X_Z);
-    Y_R = cat(2,Y_R, Y_Z);
+    L_A = [L_A; L];
     
     subplot(1, 2, 2)
     imagesc(squeeze(right_turn_Data(ii, :, :).^1.5)); % 우회전
@@ -66,19 +53,21 @@ for ii = 1:5
    
     [A,B] = ginput(2);
     
-    A_Z(1,1) = A(1,1)
-    A_Z(3,1) = A(1,1)
-    A_Z(2,1) = A(2,1)
-    A_Z(4,1) = A(2,1)
-    
-    B_Z(1,1) = B(1,1)
-    B_Z(2,1) = B(1,1)
-    B_Z(3,1) = B(2,1)
-    B_Z(4,1) = B(2,1)
-    
-    A_R = cat(2,A_R, A_Z);
-    B_R = cat(2,B_R, B_Z);
-    
-    pause(0.5);
+    R(1,1) = A(1,1) % X좌표
+    R(1,2) = B(1,1) % Y좌표
+    R(1,3) = A(2,1) - A(1,1) % 너비
+    R(1,4) = B(2,1) - B(1,1) % 높이
+
+    R_A = [R_A; R];
     
 end
+
+LEFT = cell(10,1)
+RIGHT = cell(10,1)
+
+for ii = 1:10
+    LEFT{ii,1} = L_A(ii, :)
+    RIGHT{ii,1} = R_A(ii, :)
+end
+
+T = table(LEFT,RIGHT);
