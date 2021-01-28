@@ -71,3 +71,5 @@ for ii = 1:10
 end
 
 T = table(LEFT,RIGHT);
+
+save('savefile.mat', 'T')
