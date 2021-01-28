@@ -12,7 +12,6 @@ load('Test_Data.mat')
 %%% 적절한 픽셀 크기로 라벨링 -> YOLO 네트워크 설계 후 돌려보기
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
     %행렬 초기화
     X_R = double.empty(4,0)
     Y_R = double.empty(4,0)
@@ -36,10 +35,10 @@ for ii = 1:10
     ylabel('Angle (deg.)')
     
     % 점을 찍는 순서는 왼쪽 위, 오른쪽 위, 왼쪽 아래, 오른쪽 아래 순서        
-    [X,Y] = ginput(4);
+    [X,Y] = ginput(4);    
+    
     X_R = cat(2,X_R, X);
     Y_R = cat(2,Y_R, Y);
-    
     
     subplot(1, 2, 2)
     imagesc(squeeze(right_turn_Data(ii, :, :).^1.5)); % 우회전
